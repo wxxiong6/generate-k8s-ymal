@@ -1,0 +1,31 @@
+#!/usr/bin/env php
+<?php
+/**
+ * Created by generate-k8s-yaml.
+ * User: wxiong6@gmail.com
+ * Date: 2022/5/22
+ * Time: 07:26
+ */
+
+if (PHP_SAPI !== 'cli')
+{
+    exit("only run in cli");
+}
+//生成命令行参数
+
+$options = getOpt("t:h", ["t:", "h"]);
+
+
+if (empty($options) || isset($options["h"]) || isset($options["help"])) {
+    die(<<<HELP
+Usage: wx_cg [-t templatePath]
+POSIX options:  GNU long options:    Meaning:
+      -t          --template         Template path
+      -h          --help             Print Usage
+HELP
+    );
+}
+
+$svcName = $options["t"];
+require __DIR__."/generate.php";
+generateYaml($svcName);

@@ -1,64 +1,13 @@
 <?php
 /**
  * Created by generate-k8s-ymal.
- * User: xiong
+ * User: wxiong6@gmail.com
  * Date: 2022/5/22
  * Time: 06:46
  */
 
 
 const TEMPLATE_PATH = "k8s/template/base-ClusterIP.yaml";
-
-//const TEMPLATE_PATH = "k8s/template/base-LoadBalancer.yaml";
-
-//
-//function generate($svcName) {
-//    $tplPath = __DIR__ . "/" . TEMPLATE_PATH;
-//    $tplCnfPath = __DIR__."/k8s/svc/".$svcName.".yaml";
-//    if (!file_exists($tplPath)) {
-//        exit("template ".$tplPath." not exists.");
-//    }
-//    if (!file_exists($tplCnfPath)) {
-//        exit( "tplCnfPath ".$tplCnfPath." not exists.");
-//    }
-//
-////    $tplContent = yaml_parse_file($tplPath);
-//    $tplContent = file_get_contents($tplPath);
-//    $tplConfig = yaml_parse_file($tplCnfPath);
-////        print_r($tplConfig);exit;
-//    $cnfKey = array_keys($tplConfig);
-//    foreach ($cnfKey as $k => $v) {
-//        $cnfKey[$k] = '${'. $v .'}';
-//    }
-//    $cnfVal = array_values($tplConfig);
-//    foreach ($cnfVal as $k => $v) {
-//        if (is_array($v)) {
-//            foreach ($v as $k2 => $v2) {
-//                $v[$k2] = "          - '{$v2}'";
-//            }
-//            $v = "\n".join("\n", $v);
-//        }
-//        $cnfVal[$k] = $v;
-//    }
-//
-////    print_r($cnfKey);
-//
-//
-////    print_r($cnfVal);exit;
-//
-//
-//    $svcYaml = str_replace($cnfKey, $cnfVal, $tplContent);
-//
-//    $toYamlDir = __DIR__."/yaml/".$svcName."/manifests";
-//    if (!file_exists($toYamlDir)) {
-//        mkdir($toYamlDir, 0777, true);
-//    }
-//    $toYamlPath = $toYamlDir."/".$svcName.".yaml";
-//
-//    $yamlContent = yaml_parse_file($toYamlPath);
-//
-//    file_put_contents($toYamlPath, $svcYaml);
-//}
 
 function generateYaml($svcName) {
     $tplSvcPath = __DIR__ ."/k8s/template/base-svc.yaml";

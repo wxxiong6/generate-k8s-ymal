@@ -1,0 +1,4 @@
+/bin/*
+/yaml/
+/k8s/svc/*
+.idea/

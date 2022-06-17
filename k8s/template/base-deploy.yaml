@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:
+  labels:
+    app:
+spec:
+  replicas:
+  selector:
+    matchLabels:
+      app:
+  template:
+    metadata:
+      labels:
+        app:
+      annotations:
+        prometheus.io/path: /metrics
+        prometheus.io/port: "9090"
+        prometheus.io/scrape: "true"
+    spec:
+      #  nodeSelector:
+      #    env: test-team
+      containers:
+        - args:
+#        - args:
+#          - '-grpc-addr=:31000'
+#          - '-pm-addr=:9090'
+#          - '-mall-query-addr=$(PG-chest-mall-shelves-svc)'
+#          - '-log-level=$(PG-log-level)'
+          name: chest-mall-play
+          image: ${IMAGE}
+          ports:
+            - containerPort: 31000
+              name: grpc
+              protocol: TCP
+            - containerPort: 9090
+              name: prometheus
+              protocol: TCP
+          imagePullPolicy: IfNotPresent
+          # resources:
+          #   limits:
+          #     cpu: "100m"
+          envFrom:
+            - prefix: PG-
+              configMapRef:
+                name: playground-config
+                optional: false
+          env:
+            - name: aliyun_logs_log-app
+              value: /app/logs/*
+            - name: aliyun_logs_log-stdout
+              value: stdout
+              ######### 日志保留时间，只对单个logstore生效 ###########
+            - name: aliyun_logs_log-stdout_ttl
+              value: "7"
+              ######### 日志分区数，只对单个logstore生效 ###########
+            - name: aliyun_logs_log-stdout_shard
+              value: "2"
+          volumeMounts:
+            - name:
+              mountPath: /app/logs
+      volumes:
+        - name:
+          emptyDir: {}
+      imagePullSecrets:
+        - name: docker-reader-secret
